@@ -18,13 +18,14 @@ class chapter5Problems
 		static void greatestAndLeastOfThree();
 		static void studentLineUp();
 		static void payrollReport();
-		static void savingsAccountBalance();
+		static void savingsAccountBalanceAndMod();
 		static void salesBarChart();
 		static void populationBarChart();
+		static void budgetAnalysis();
+		static void randomNumberGuessingAndMod();
 		static void squareDisplay();
 		static void patternDisplay();
 		static void numericProcessing();
 		static void studentLineUpMod();
-		static void savingsAccountMod();
 		chapter5Problems();
 };

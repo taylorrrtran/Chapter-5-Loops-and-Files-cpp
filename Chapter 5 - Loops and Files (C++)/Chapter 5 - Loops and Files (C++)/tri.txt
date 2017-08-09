@@ -1,0 +1,4 @@
+Total balance:             $  103.36
+Total amount of deposits:  $  100.00
+Total amount of withdraws: $  100.00
+Total interest earned:     $    3.36

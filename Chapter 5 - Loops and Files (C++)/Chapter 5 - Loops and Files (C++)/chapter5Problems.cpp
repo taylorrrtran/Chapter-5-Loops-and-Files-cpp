@@ -8,7 +8,7 @@
 int main()
 {
 	chapter5Problems *p1 = new chapter5Problems;
-	p1->numericProcessing();
+	p1->studentLineUpMod();
 	system("pause");
 	return 0;
 }
@@ -459,49 +459,6 @@ void chapter5Problems::population()
 	}
 }
 
-void chapter5Problems::studentLineUp()
-{
-	/* This program will show which student will be in the front and end of the line
-	   assuming no two student have similar names */
-
-	std::string student;
-	double numStudents;
-
-	//Gather num of students
-	std::cout << "Enter the number of students: ";
-	std::cin >> numStudents;
-
-	//Input validation: Number of students cannot be less than 1 or greater than 25
-	while (numStudents < 1 || numStudents > 25)
-	{
-		std::cout << "Number of students cannot be less than 1 or greater than 25. Try again: ";
-		std::cin >> numStudents;
-	}
-
-	//Gather student names and alphabetize to see who is first and last
-	std::cin.ignore();
-	std::string first, last;
-	for (int i = 1; i <= numStudents; i++)
-	{
-		std::cout << "Enter student name: ";
-		std::getline(std::cin, student);
-
-		if (i == 1)
-		{
-			first = student;
-			last = student;
-		}
-		else if (first < student)
-			first = student;
-		else if (last > student)
-			last = student;
-	}
-
-	//Display first and last student of the list
-	std::cout << "First student: " << last << std::endl;
-	std::cout << "Last student:  " << first << std::endl;
-}
-
 void chapter5Problems::celsiusToFahrenheitTable()
 {
 	//This program will print a table of Celsius to Fahrenheit table from temperatures 0 - 20
@@ -552,6 +509,49 @@ void chapter5Problems::greatestAndLeastOfThree()
 	//Display the largest and smallest numbers in the series
 	std::cout << "Largest number in the series:  " << largest << std::endl;
 	std::cout << "Smallest number in the series: " << smallest << std::endl;
+}
+
+void chapter5Problems::studentLineUp()
+{
+	/* This program will show which student will be in the front and end of the line
+	assuming no two student have similar names */
+
+	std::string student;
+	double numStudents;
+
+	//Gather num of students
+	std::cout << "Enter the number of students: ";
+	std::cin >> numStudents;
+
+	//Input validation: Number of students cannot be less than 1 or greater than 25
+	while (numStudents < 1 || numStudents > 25)
+	{
+		std::cout << "Number of students cannot be less than 1 or greater than 25. Try again: ";
+		std::cin >> numStudents;
+	}
+
+	//Gather student names and alphabetize to see who is first and last
+	std::cin.ignore();
+	std::string first, last;
+	for (int i = 1; i <= numStudents; i++)
+	{
+		std::cout << "Enter student name: ";
+		std::getline(std::cin, student);
+
+		if (i == 1)
+		{
+			first = student;
+			last = student;
+		}
+		else if (first < student)
+			first = student;
+		else if (last > student)
+			last = student;
+	}
+
+	//Display first and last student of the list
+	std::cout << "First student: " << last << std::endl;
+	std::cout << "Last student:  " << first << std::endl;
 }
 
 void chapter5Problems::payrollReport()
@@ -676,6 +676,300 @@ void chapter5Problems::payrollReport()
 	std::cout << "Total FICA withholdings: $" << totalFICA << std::endl;
 }
 
+void chapter5Problems::savingsAccountBalanceAndMod()
+{
+	//This program will calculate the balance of a savings account at the end of a period
+
+	double annualInterest, monthlyInterest, interest, balance, months, deposit, withdraw;
+	double totalDeposits = 0, totalWithdraws = 0, totalInterest = 0;
+
+	//Write report to a file
+	std::ofstream outputFile;
+	std::string filename;
+
+	//Ask user for file name
+	std::cout << "Enter a filename to read the report to and including its file extension: ";
+	std::cin >> filename;
+
+	//Open file
+	outputFile.open(filename);
+
+	//Input validation: Make sure file can be opened
+	while (!outputFile)
+	{
+		std::cout << "There was an error in opening the file. Try again: ";
+		std::cin >> filename;
+		outputFile.open(filename);
+	}
+
+	//Gather input
+	std::cout << "Enter the annual interest rate: ";
+	std::cin >> annualInterest;
+
+	std::cout << "Enter the starting balance: $";
+	std::cin >> balance;
+
+	std::cout << "Enter how many months have passed since the account was established: ";
+	std::cin >> months;
+
+	//Monthly interest
+	interest = (annualInterest / 100.00) / 12.00;
+
+	//Input valiadtion: Months can't be negative
+	while (months < 1)
+	{
+		std::cout << "Amount of months passed cannot be negative. Try again: ";
+		std::cin >> months;
+	}
+	
+	//For loop to ask amount deposited/withdrawn every month
+	for (int i = 1; i <= months; i++) 
+	{
+		std::cout << "Amount to be deposited into Month " << i << ": ";
+		std::cin >> deposit;
+
+		//Input valiadtion: Deposit can't be negative
+		while (deposit < 0)
+		{
+			std::cout << "Amount deposited cannot be negative. Try again: ";
+			std::cin >> deposit;
+		}
+
+		//Keep track of total deposits
+		totalDeposits += deposit;
+
+		std::cout << "Amount to be withdrawn from this month: " << i << ": ";
+		std::cin >> withdraw;
+
+		//Input valiadtion: Withdraw can't be negative
+		while (withdraw < 0)
+		{
+			std::cout << "Amount withdrawn cannot be negative. Try again: ";
+			std::cin >> withdraw;
+		}
+
+		//Keep track of total amount of withdraws
+		totalWithdraws += withdraw;
+
+		//Keep a total of the balance
+		balance += deposit - withdraw;
+
+		//If balance is negative, close the account and loop
+		if (balance < 0)
+		{
+			std::cout << "The account has been closed due to a negative balance. \n";
+			break;
+		}
+
+		monthlyInterest = balance * interest;
+		balance += monthlyInterest;
+
+		//Calculate total monthly interest
+		totalInterest += monthlyInterest;
+	}
+
+	//Display totals
+	std::cout << std::setprecision(2) << std::fixed << std::showpoint;
+	std::cout << "Total balance:             $" << std::setw(8) << balance << std::endl;
+	std::cout << "Total amount of deposits:  $" << std::setw(8) << totalDeposits << std::endl;
+	std::cout << "Total amount of withdraws: $" << std::setw(8) << totalWithdraws <<std::endl;
+	std::cout << "Total interest earned:     $" << std::setw(8) << totalInterest << std::endl;
+
+	//Read report into file
+	outputFile << std::setprecision(2) << std::fixed << std::showpoint;
+	outputFile << "Total balance:             $" << std::setw(8) << balance << std::endl;
+	outputFile << "Total amount of deposits:  $" << std::setw(8) << totalDeposits << std::endl;
+	outputFile << "Total amount of withdraws: $" << std::setw(8) << totalWithdraws << std::endl;
+	outputFile << "Total interest earned:     $" << std::setw(8) << totalInterest << std::endl;
+
+	//Close file
+	outputFile.close();
+
+
+}
+
+void chapter5Problems::salesBarChart()
+{
+	//This program will display a graph comparing each store's bar sales
+
+	double sales1, sales2, sales3, sales4, sales5;
+
+	//For loop to gather sales for 5 stores
+	for (int i = 1; i <= 5; i++)
+	{
+		std::cout << "Enter today's sales for Store " << i << ": $";
+		if (i == 1)
+			std::cin >> sales1;
+		else if (i == 2)
+			std::cin >> sales2;
+		else if (i == 3)
+			std::cin >> sales3;
+		else if (i == 4)
+			std::cin >> sales4;
+		else
+			std::cin >> sales5;
+	}
+
+	sales1 /= 100.00;
+	sales2 /= 100.00;
+	sales3 /= 100.00;
+	sales4 /= 100.00;
+	sales5 /= 100.00;
+
+	//Display bar chart for each store
+	std::cout << "SALES BAR CHART\n";
+	std::cout << "(Each * = $100)\n";
+
+	//Store 1
+	std::cout << "Store 1: ";
+	for (int i = 1; i <= sales1; i++)
+		std::cout << "*";
+	std::cout << std::endl;
+
+	//Store 2
+	std::cout << "Store 2: ";
+	for (int i = 1; i <= sales2; i++)
+		std::cout << "*";
+	std::cout << std::endl;
+
+	//Store 3
+	std::cout << "Store 3: ";
+	for (int i = 1; i <= sales3; i++)
+		std::cout << "*";
+	std::cout << std::endl;
+
+	//Store 4
+	std::cout << "Store 4: ";
+	for (int i = 1; i <= sales4; i++)
+		std::cout << "*";
+	std::cout << std::endl;
+
+	//Store 5
+	std::cout << "Store 5: ";
+	for (int i = 1; i <= sales5; i++)
+		std::cout << "*";
+	std::cout << std::endl;
+		
+}
+
+void chapter5Problems::populationBarChart()
+{
+	//This program will produce a bar chart based on reading population from a file
+
+	std::ifstream inputFile;
+	std::string filename1;
+	double year, population, numAsterisk;
+
+	//Ask user for file name
+	std::cout << "Enter a filename of the Prairieville population including its file extension: ";
+	std::cin >> filename1;
+
+	//Open file
+	inputFile.open(filename1);
+
+	//Input validation: Make sure file can be opened
+	while (!inputFile) {
+		std::cout << "There was an error in opening the file. Try again: ";
+		std::cin >> filename1;
+		inputFile.open(filename1);
+	}
+
+	//Display bar graph
+	std::cout << "PRAIRIEVILLE POPULATION GROWTH\n";
+	std::cout << "(each * represents 1,000 people)\n";
+
+	//Gather data from file
+	while (inputFile >> year >> population)
+	{
+		//Display
+		std::cout << year << ' ';
+
+		//Calculate number of asterisks where 1 asterisk = every 1,000 people and display them
+		numAsterisk = population / 1000.00;
+		for (int i = 1; i <= numAsterisk; i++)
+			std::cout << '*';
+
+		std::cout << std::endl;
+	}
+
+	//Close the file
+	inputFile.close();
+	
+}
+
+void chapter5Problems::budgetAnalysis()
+{
+	//This program will display if a user is over or under his/her budget
+
+	double budget, expenses, total = 0;
+
+	//Gather input
+	std::cout << "Enter the budget for this month: $";
+	std::cin >> budget;
+
+	//Calculate running total to see if user is over/under budget
+	std::cout << "Enter 0000 when you are done typing in expenses: ";
+	std::cin >> expenses;
+	while (expenses != 0000)
+	{
+		std::cout << "Enter expenses: $";
+		std::cin >> expenses;
+		total += expenses;
+	}
+
+	if (total > budget)
+		std::cout << "You are over budget.\n";
+	else if (total < budget)
+		std::cout << "You are under budget.\n";
+	else
+		std::cout << "You have just reached your budget.\n";
+}
+
+void chapter5Problems::randomNumberGuessingAndMod()
+{
+	//This program will run until the user guests the correct number
+
+	double number;
+	int total = 1;
+
+	//Get the system time
+	unsigned seed = time(0);
+
+	//Seed the random number generator
+	srand(seed);
+
+	//Range value from 1 - 999
+	const int MIN_VALUE = 1;
+	const int MAX_VALUE = 999;
+
+	//Generate new numbers as long as the loop is active
+	int randomNum = (rand() % (MAX_VALUE - MIN_VALUE + 1)) + MIN_VALUE;
+
+	//Display if random number is too high or too low
+	std::cout << "Enter a number to correct the guessing number: ";
+	std::cin >> number;
+	while (number != randomNum)
+	{
+		if (number < randomNum)
+		{
+			std::cout << "Too low, try again: ";
+			std::cin >> number;
+		}
+		else if (number > randomNum)
+		{
+			std::cout << "Too high, try again: ";
+			std::cin >> number;
+		}
+
+		//Keep running total
+		total += 1;
+	}
+
+	//Show correct number and total amount of guesses
+	std::cout << "Congrats! You have guessed the correct number!\n";
+	std::cout << "Total amount of guesses: " << total << std::endl;
+}
+
 void chapter5Problems::squareDisplay()
 {
 	//This program will create a square display based on an integer input
@@ -687,7 +981,7 @@ void chapter5Problems::squareDisplay()
 	std::cin >> square;
 
 	//Input validation: The length and row cannot be less than 1 or greater than 15
-	while (square < 1 || square > 15) 
+	while (square < 1 || square > 15)
 	{
 		std::cout << "The length and row cannot be less than 1 or greater than 15. Try again: ";
 		std::cin >> square;
@@ -709,7 +1003,7 @@ void chapter5Problems::squareDisplay()
 void chapter5Problems::patternDisplay()
 {
 	//This program will display two opposite patterns
-	
+
 	std::cout << "Pattern A: \n";
 	for (int i = 1; i <= 10; i++)
 	{
@@ -746,11 +1040,12 @@ void chapter5Problems::numericProcessing()
 	std::cout << "Enter a filename of integers including its file extension: ";
 	std::cin >> filename1;
 
-	//Open file of answer key
+	//Open file
 	inputFile.open(filename1);
 
 	//Input validation: Make sure file can be opened
-	while (!inputFile) {
+	while (!inputFile) 
+	{
 		std::cout << "There was an error in opening the file. Try again: ";
 		std::cin >> filename1;
 		inputFile.open(filename1);
@@ -762,7 +1057,10 @@ void chapter5Problems::numericProcessing()
 		totalSum += numbers;
 		totalNumbers += 1;
 	}
-	
+
+	//Close the file
+	inputFile.close();
+
 	//Calculate average of the numbers in the file
 	average = totalSum / totalNumbers;
 
@@ -771,6 +1069,52 @@ void chapter5Problems::numericProcessing()
 	std::cout << "Total sum of the numbers in the file  : " << totalSum << std::endl;
 	std::cout << "Total number of numbers in the file   : " << totalNumbers << std::endl;
 	std::cout << "Average of all the numbers in the file: " << average << std::endl;
+}
+
+void chapter5Problems::studentLineUpMod()
+{
+	/* This program will add a modification to the student line up program by reading
+	   student names from a file */
+
+	std::ifstream inputFile;
+	std::string filename;
+
+	//Gather student file name
+	std::cout << "Enter the file with the name of students along with the file extension: ";
+	std::cin >> filename;
+
+	//Open file
+	inputFile.open(filename);
+
+	//Input validation: Make sure file can be opened
+	while (!inputFile)
+	{
+		std::cout << "There was an error in opening the file. Try again: ";
+		std::cin >> filename;
+		inputFile.open(filename);
+	}
+
+	//Read student names and alphabetisze to see who is first and last
+	std::string first, last, student;
+	int i = 1;
+	while (inputFile >> student)
+	{
+		//Only the first student will be to be initalized to first and last so following names can be compared to
+		if (i == 1)
+		{
+			first = student;
+			last = student;
+			i++;
+		}
+		else if (first < student)
+			first = student;
+		else if (last > student)
+			last = student;
+	}
+
+	//Display first and last student of the list
+	std::cout << "First student: " << last << std::endl;
+	std::cout << "Last student:  " << first << std::endl;
 }
 
 chapter5Problems::chapter5Problems()

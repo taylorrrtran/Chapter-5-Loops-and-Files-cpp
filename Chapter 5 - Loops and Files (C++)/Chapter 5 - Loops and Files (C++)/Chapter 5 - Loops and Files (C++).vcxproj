@@ -146,6 +146,8 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="numericProcessing.txt" />
+    <Text Include="people.txt" />
+    <Text Include="studentline.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

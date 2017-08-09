@@ -28,5 +28,11 @@
     <Text Include="numericProcessing.txt">
       <Filter>Source Files</Filter>
     </Text>
+    <Text Include="people.txt">
+      <Filter>Source Files</Filter>
+    </Text>
+    <Text Include="studentline.txt">
+      <Filter>Source Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

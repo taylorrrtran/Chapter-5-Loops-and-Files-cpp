@@ -1,2 +1,5 @@
-﻿  Chapter 5 - Loops and Files (C++).vcxproj -> C:\Users\Taylor Tran\Documents\Visual Studio 2017\Projects\Chapter 5 - Loops and Files (C++)\Debug\Chapter 5 - Loops and Files (C++).exe
+﻿  chapter5Problems.cpp
+c:\users\taylor tran\documents\visual studio 2017\projects\chapter 5 - loops and files (c++)\chapter 5 - loops and files (c++)\chapter5problems.cpp(184): warning C4244: 'initializing': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\users\taylor tran\documents\visual studio 2017\projects\chapter 5 - loops and files (c++)\chapter 5 - loops and files (c++)\chapter5problems.cpp(936): warning C4244: 'initializing': conversion from 'time_t' to 'unsigned int', possible loss of data
+  Chapter 5 - Loops and Files (C++).vcxproj -> C:\Users\Taylor Tran\Documents\Visual Studio 2017\Projects\Chapter 5 - Loops and Files (C++)\Debug\Chapter 5 - Loops and Files (C++).exe
   Chapter 5 - Loops and Files (C++).vcxproj -> C:\Users\Taylor Tran\Documents\Visual Studio 2017\Projects\Chapter 5 - Loops and Files (C++)\Debug\Chapter 5 - Loops and Files (C++).pdb (Partial PDB)
